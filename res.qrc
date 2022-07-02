@@ -1,0 +1,49 @@
+<RCC>
+    <qresource prefix="/res">
+        <file>font/Halvar Engschrift Black Slanted.ttf</file>
+        <file>font/Halvar Engschrift Black SuperSlanted.ttf</file>
+        <file>font/Halvar Engschrift Black.ttf</file>
+        <file>font/Halvar Engschrift Bold Slanted.ttf</file>
+        <file>font/Halvar Engschrift Bold SuperSlanted.ttf</file>
+        <file>font/Halvar Engschrift Bold.ttf</file>
+        <file>font/Halvar Engschrift ExtraBold Slanted.ttf</file>
+        <file>font/Halvar Engschrift ExtraBold SuperSlanted.ttf</file>
+        <file>font/Halvar Engschrift ExtraBold.ttf</file>
+        <file>font/Halvar Engschrift ExtraThin Slanted.ttf</file>
+        <file>font/Halvar Engschrift ExtraThin SuperSlanted.ttf</file>
+        <file>font/Halvar Engschrift ExtraThin.ttf</file>
+        <file>font/Halvar Engschrift Hairline Slanted.ttf</file>
+        <file>font/Halvar Engschrift Hairline SuperSlanted.ttf</file>
+        <file>font/Halvar Engschrift Hairline.ttf</file>
+        <file>font/Halvar Engschrift Light Slanted.ttf</file>
+        <file>font/Halvar Engschrift Light SuperSlanted.ttf</file>
+        <file>font/Halvar Engschrift Light.ttf</file>
+        <file>font/Halvar Engschrift Medium Slanted.ttf</file>
+        <file>font/Halvar Engschrift Medium SuperSlanted.ttf</file>
+        <file>font/Halvar Engschrift Medium.ttf</file>
+        <file>font/Halvar Engschrift Regular Slanted.ttf</file>
+        <file>font/Halvar Engschrift Regular SuperSlanted.ttf</file>
+        <file>font/Halvar Engschrift Regular.ttf</file>
+        <file>font/Halvar Engschrift Thin Slanted.ttf</file>
+        <file>font/Halvar Engschrift Thin SuperSlanted.ttf</file>
+        <file>font/Halvar Engschrift Thin.ttf</file>
+        <file>font/TTRamillas-Black.otf</file>
+        <file>font/TTRamillas-BlackDecor.otf</file>
+        <file>font/TTRamillas-BlackDecorItalic.otf</file>
+        <file>font/TTRamillas-BlackItalic.otf</file>
+        <file>font/TTRamillas-BlackOutline.otf</file>
+        <file>font/TTRamillas-BlackOutlineItalic.otf</file>
+        <file>font/TTRamillas-Bold.otf</file>
+        <file>font/TTRamillas-BoldItalic.otf</file>
+        <file>font/TTRamillas-ExtraBold.otf</file>
+        <file>font/TTRamillas-ExtraBoldItalic.otf</file>
+        <file>font/TTRamillas-ExtraLight.otf</file>
+        <file>font/TTRamillas-ExtraLightItalic.otf</file>
+        <file>font/TTRamillas-Italic.otf</file>
+        <file>font/TTRamillas-Light.otf</file>
+        <file>font/TTRamillas-LightItalic.otf</file>
+        <file>font/TTRamillas-Medium.otf</file>
+        <file>font/TTRamillas-MediumItalic.otf</file>
+        <file>font/TTRamillas-Regular.otf</file>
+    </qresource>
+</RCC>

@@ -1,3 +1,4 @@
+#include "Media.h"
 #include "OlympKassa.h"
 
 #include <QApplication>
@@ -8,11 +9,12 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    QFileInfoList *infoList = new QFileInfoList(QDir("D:/monitor/media").entryInfoList(QDir::Files, QDir::Size));
+    //QFileInfoList *infoList = new QFileInfoList(QDir("D:/monitor/media").entryInfoList(QDir::Files, QDir::Size));
     QSettings settings("C:/monitor/settings.ini", QSettings::IniFormat);
     settings.beginGroup("MAIN");
     QString pathHttp = settings.value("PATH_HTML").toString();
     QString fontName = settings.value("FONT_NAME").toString();
+    QString mediaPath = "D:/monitor/media";
     int fontSize = settings.value("FONT_SIZE").toUInt();
     int timerInterval = settings.value("INTERVAL_READING").toUInt();
     settings.endGroup();
@@ -24,7 +26,10 @@ int main(int argc, char *argv[])
     settings.endGroup();
     QFont font(QFontDatabase::applicationFontFamilies(QFontDatabase::addApplicationFont(":/res/font/" + fontName)).at(0));
     font.setPointSize(fontSize);
-    OlympKassa w(infoList, pathHttp, font, timerInterval);
+    OlympKassa w(pathHttp, font, timerInterval);
+    Media media(mediaPath, w.getHtmlView());
+    QObject::connect(&w, &OlympKassa::playMediaSignal, &media, &Media::playMedia);
+    QObject::connect(&w, &OlympKassa::stopMediaSignal, &media, &Media::stopMedia);
     w.setGeometry(x, y, dX, dY);
     w.setWindowFlag(Qt::FramelessWindowHint);
     w.show();

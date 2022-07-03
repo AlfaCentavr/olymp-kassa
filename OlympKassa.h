@@ -17,25 +17,20 @@ class OlympKassa : public QMainWindow
     Q_OBJECT
 
 public:
-   // OlympKassa(QFileInfoList *files, QWidget *parent = nullptr);
-    OlympKassa(QFileInfoList *files, QString &pathHttp, QFont &font, int timerInterval, QWidget *parent = nullptr);
+    OlympKassa(QString &pathHttp, QFont &font, int timerInterval, QWidget *parent = nullptr);
     ~OlympKassa();
+    QWidget* getHtmlView();
 public slots:
     void simpleSetHtml(QString html);
+    void hideHtml();
+    void showHtml();
 private:
     Ui::OlympKassa *ui;
     bool isMediaPlay = false;
     QString &pathHttpFile;
     QFont &font;
-    QLabel *image;
-    QMediaPlayer *player;
-    QWidget *playerWidget;
-    QFileInfoList *files;
-    bool isImage(QFile &file);
-    bool isVideo(QFile &file);
-private slots:
-    void setHtml();
-    void playMedia();
-    void reverseWidget();
+signals:
+    void playMediaSignal();
+    void stopMediaSignal();
 };
 #endif // OLYMPKASSA_H

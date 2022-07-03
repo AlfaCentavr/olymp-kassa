@@ -31,4 +31,5 @@ RESOURCES += \
     res.qrc
 
 DISTFILES += \
+    .gitignore \
     README.md

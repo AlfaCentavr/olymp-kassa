@@ -8,7 +8,6 @@ class Reader : public QObject
 {
     Q_OBJECT
 public:
-  //  explicit Reader(QObject *parent = nullptr);
     Reader(QString &pathHtml, QObject *parent = nullptr);
     void start();
 private:
@@ -18,6 +17,8 @@ public slots:
     void checkFile();
 signals:
     void updateFile(QString &html);
+    void startMedia();
+    void stopMedia();
 };
 
 #endif // READER_H

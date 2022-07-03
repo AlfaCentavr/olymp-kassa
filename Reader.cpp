@@ -24,30 +24,28 @@ void Reader::start()
  * то прочитайнный файл уже отображен. В противном случае устанавливаем стрингу для передачи в форму и сохраняем хеш-сумму
  */
 void Reader::checkFile(){
-    qDebug() << "path html: " + pathHtml;
     QFile htmlFile(pathHtml);
     QByteArray dataHtml;
     QString textHtml = "";
     if(htmlFile.exists()) {
+        emit stopMedia();
         if(htmlFile.open(QIODevice::ReadOnly)){
            dataHtml = htmlFile.readAll();
            QByteArray hash = QCryptographicHash::hash(dataHtml, QCryptographicHash::Md5);
-           if(hash != this->hash) {
+           if(hash != this->hash) { //Если хэш-суммы не сошлись, значит файл либо только что прочитан, либо необходимо отобразить новый
                textHtml = QString(dataHtml);
                textHtml.replace(QRegularExpression("(<BODY STYLE).*(>)"), "<BODY STYLE=\"background-color: #edab71; margin: 0; font-family: Arial; font-size: 8pt; font-style: normal; \">");
                this->hash = hash;
-               qDebug() << "html is open";
-           } else {
-               qDebug() << "html doesn't change";
+           } else { //Файл существует, но уже отображен
                return;
            }
-        } else {
-            qDebug() << "html doesn't open";
+        } else { //Файл не удалось открыть
+            qDebug() << "Не удалось открыть файл";
             this->hash = 0;
         }
-    } else {
-        qDebug() << "html doesn't exist";
+    } else { //Файл не существует, именно тут необходимо включать проигрывание изображений и медиа
         this->hash = 0;
+        emit startMedia();
     }
     emit updateFile(textHtml);
 }

@@ -15,6 +15,7 @@ int main(int argc, char *argv[])
     QString pathHttp = settings.value("PATH_HTML").toString();
     QString fontName = settings.value("FONT_NAME").toString();
     QString mediaPath = settings.value("PATH_MEDIA").toString();
+    int lifeIntervalImage = settings.value("IMAGE_INTERVAL").toInt();
     int fontSize = settings.value("FONT_SIZE").toUInt();
     int timerInterval = settings.value("INTERVAL_READING").toUInt();
     settings.endGroup();
@@ -28,6 +29,7 @@ int main(int argc, char *argv[])
     font.setPointSize(fontSize);
     OlympKassa w(pathHttp, font, timerInterval);
     Media media(mediaPath, w.getHtmlView());
+    media.changeIntervalImage(lifeIntervalImage);
     QObject::connect(&w, &OlympKassa::playMediaSignal, &media, &Media::playMedia);
     QObject::connect(&w, &OlympKassa::playMediaSignal, &media, &Media::stopMedia);
     w.setGeometry(x, y, dX, dY);

@@ -19,7 +19,7 @@ Media::Media(QString &mediaPath, QWidget *htmlView, QObject *parent)
     videoSink->hide();
     imageView->hide();
     imageTimer = new QTimer;
-    imageTimer->setInterval(4000);
+    imageTimer->setInterval(intervalUpdateImage);
     player = new QMediaPlayer;
     player->setVideoOutput(videoSink);
     infoList = new QFileInfoList(QDir(mediaPath).entryInfoList(QDir::Files, QDir::Size));
@@ -82,6 +82,15 @@ void Media::setImageWidget(QFile &file) {
     imageView->setMask(imageView->pixmap().mask());
     imageView->update();
     imageTimer->start();
+}
+
+void Media::changeIntervalImage(int interval) {
+    if(interval > 1000) {
+    intervalUpdateImage = interval;
+    imageTimer->setInterval(intervalUpdateImage);
+    } else {
+        qDebug() << "Невозможно установить значение интервала менее 1 секунды";
+    }
 }
 
 void Media::stopMedia() {

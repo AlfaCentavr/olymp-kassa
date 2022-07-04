@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     QString pathHttp = settings.value("PATH_HTML").toString();
     QString fontName = settings.value("FONT_NAME").toString();
     QString mediaPath = settings.value("PATH_MEDIA").toString();
-    int lifeIntervalImage = settings.value("IMAGE_INTERVAL").toInt();
+    int lifeIntervalImage = settings.value("IMAGE_INTERVAL").toUInt();
     int fontSize = settings.value("FONT_SIZE").toUInt();
     int timerInterval = settings.value("INTERVAL_READING").toUInt();
     settings.endGroup();

@@ -85,6 +85,7 @@ void Media::setImageWidget(QFile &file) {
 }
 
 void Media::changeIntervalImage(int interval) {
+    interval *= 1000;
     if(interval > 1000) {
     intervalUpdateImage = interval;
     imageTimer->setInterval(intervalUpdateImage);

@@ -28,7 +28,6 @@ void Reader::checkFile(){
     QByteArray dataHtml;
     QString textHtml = "";
     if(htmlFile.exists()) {
-        emit stopMedia();
         if(htmlFile.open(QIODevice::ReadOnly)){
            dataHtml = htmlFile.readAll();
            QByteArray hash = QCryptographicHash::hash(dataHtml, QCryptographicHash::Md5);
@@ -36,14 +35,17 @@ void Reader::checkFile(){
                textHtml = QString(dataHtml);
                textHtml.replace(QRegularExpression("(<BODY STYLE).*(>)"), "<BODY STYLE=\"background-color: #edab71; margin: 0; font-family: Arial; font-size: 8pt; font-style: normal; \">");
                this->hash = hash;
+               qDebug() << "Stop media. File is open and read";
            } else { //Файл существует, но уже отображен
                return;
            }
+           emit stopMedia();
         } else { //Файл не удалось открыть
-            qDebug() << "Не удалось открыть файл";
+            qDebug() << "Doesn't open file " + htmlFile.fileName();
             this->hash = 0;
         }
-    } else { //Файл не существует, именно тут необходимо включать проигрывание изображений и медиа
+    } else { //Файл не существует, именно тут необходимо включать проигрывание изображений и 
+        qDebug() << "Start media. File deleted";
         this->hash = 0;
         emit startMedia();
     }

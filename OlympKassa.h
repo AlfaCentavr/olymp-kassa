@@ -19,7 +19,7 @@ class OlympKassa : public QMainWindow
 public:
     OlympKassa(QString &pathHttp, QFont &font, int timerInterval, QWidget *parent = nullptr);
     ~OlympKassa();
-    QWidget* getHtmlView();
+    QLayout *getLayout();
 public slots:
     void simpleSetHtml(QString html);
     void hideHtml();
@@ -29,6 +29,8 @@ private:
     bool isMediaPlay = false;
     QString &pathHttpFile;
     QFont &font;
+    QString htmlStyle = "background-color: rgb(237, 171, 113);";
+    QString mediaStyle = "background-color: rgb(0, 0, 0);";
 signals:
     void playMediaSignal();
     void stopMediaSignal();

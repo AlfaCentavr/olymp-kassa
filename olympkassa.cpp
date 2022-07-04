@@ -26,7 +26,9 @@ OlympKassa::OlympKassa(QString &pathHttp, QFont &font, int timerInterval, QWidge
     connect(thread, &QThread::finished, thread, &QObject::deleteLater);
     connect(reader, &Reader::updateFile, this, &OlympKassa::simpleSetHtml);
     connect(reader, &Reader::startMedia, this, &OlympKassa::hideHtml);
+    connect(reader, &Reader::startMedia, this, &OlympKassa::playMediaSignal);
     connect(reader, &Reader::stopMedia, this, &OlympKassa::showHtml);
+    connect(reader, &Reader::stopMedia, this, &OlympKassa::stopMediaSignal);
     reader->moveToThread(thread);
     thread->start();
     timer->start(timerInterval * 1000);
@@ -46,15 +48,19 @@ void OlympKassa::simpleSetHtml(QString html) {
 }
 
 void OlympKassa::hideHtml() {
-    ui->htmlView->hide();
+    ui->olympLogo->hide();
+    ui->widget->hide();
+    ui->centralwidget->setStyleSheet(mediaStyle);
 }
 
 void OlympKassa::showHtml() {
-    ui->htmlView->show();
+    ui->widget->show();
+    ui->olympLogo->show();
+    ui->centralwidget->setStyleSheet(htmlStyle);
 }
 
-QWidget *OlympKassa::getHtmlView() {
-    return ui->htmlView;
+QLayout *OlympKassa::getLayout() {
+    return  ui->verticalLayout_2;
 }
 
 

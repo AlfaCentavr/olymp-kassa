@@ -28,12 +28,12 @@ int main(int argc, char *argv[])
     QFont font(QFontDatabase::applicationFontFamilies(QFontDatabase::addApplicationFont(":/res/font/" + fontName)).at(0));
     font.setPointSize(fontSize);
     OlympKassa w(pathHttp, font, timerInterval);
-    Media media(mediaPath, w.getHtmlView());
-    media.changeIntervalImage(lifeIntervalImage);
-    QObject::connect(&w, &OlympKassa::playMediaSignal, &media, &Media::playMedia);
-    QObject::connect(&w, &OlympKassa::playMediaSignal, &media, &Media::stopMedia);
     w.setGeometry(x, y, dX, dY);
     w.setWindowFlag(Qt::FramelessWindowHint);
     w.show();
+    Media media(mediaPath, w.getLayout());
+    media.changeIntervalImage(lifeIntervalImage);
+    QObject::connect(&w, &OlympKassa::playMediaSignal, &media, &Media::playMedia);
+    QObject::connect(&w, &OlympKassa::stopMediaSignal, &media, &Media::stopMedia);
     return a.exec();
 }

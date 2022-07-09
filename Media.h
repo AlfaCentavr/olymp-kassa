@@ -12,7 +12,7 @@ class Media : public QObject
 {
     Q_OBJECT
 public:
-    Media(QString &mediaPath, QWidget *htmlView, QObject *parent = nullptr);
+    Media(QString &mediaPath, QLayout *layout, QObject *parent = nullptr);
     void changeIntervalImage(int interval);
 public slots:
     void playMedia();
@@ -20,7 +20,7 @@ public slots:
 private slots:
     void playNext();
     void stopImage();
-    void stopVideo();
+    void stopVideo(QMediaPlayer::PlaybackState rate);
 private:
     QString &mediaPath;
     QFileInfoList *infoList;
@@ -28,6 +28,7 @@ private:
     QTimer *imageTimer;
     QVideoWidget *videoSink;
     QMediaPlayer *player;
+    bool isPlay = false;
     int currentFileIndex;
     int intervalUpdateImage = 4000;
     bool isImage(QFile &file);
@@ -36,6 +37,7 @@ private:
     void setVideoWidget(QFile &file);
 signals:
     void nextFileSignal();
+    void signalIsStoped();
 };
 
 #endif // MEDIA_H

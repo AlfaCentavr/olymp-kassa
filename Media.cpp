@@ -5,19 +5,23 @@
 #include <QPixmap>
 #include <QRegularExpression>
 #include <QTimer>
+#include <QLayout>
 
-Media::Media(QString &mediaPath, QWidget *htmlView, QObject *parent)
+Media::Media(QString &mediaPath, QLayout *layout, QObject *parent)
     : QObject{parent}
     , mediaPath(mediaPath)
 {
     videoSink = new QVideoWidget;
-    videoSink->setParent(htmlView->parentWidget());
-    videoSink->setGeometry(htmlView->geometry());
-    imageView = new QLabel;
-    imageView->setParent(htmlView->parentWidget());
-    imageView->setGeometry(htmlView->geometry());
     videoSink->hide();
+    videoSink->setParent(layout->parentWidget());
+    videoSink->setMinimumSize(layout->minimumSize());
+    layout->addWidget(videoSink);
+    imageView = new QLabel;
+    imageView->setAlignment(Qt::AlignCenter);
     imageView->hide();
+    imageView->setParent(layout->parentWidget());
+    imageView->setMinimumSize(layout->minimumSize());
+    layout->addWidget(imageView);
     imageTimer = new QTimer;
     imageTimer->setInterval(intervalUpdateImage);
     player = new QMediaPlayer;
@@ -25,7 +29,7 @@ Media::Media(QString &mediaPath, QWidget *htmlView, QObject *parent)
     infoList = new QFileInfoList(QDir(mediaPath).entryInfoList(QDir::Files, QDir::Size));
     connect(this, &Media::nextFileSignal, this, &Media::playNext);
     connect(imageTimer, &QTimer::timeout, this, &Media::stopImage);
-    connect(player, &QMediaPlayer::videoOutputChanged, this, &Media::stopVideo);
+    connect(player, &QMediaPlayer::playbackStateChanged, this, &Media::stopVideo);
 }
 
 bool Media::isImage(QFile &file) {
@@ -37,14 +41,22 @@ bool Media::isVideo(QFile &file) {
 }
 
 void Media::playMedia() {
-    currentFileIndex = -1; //Стандартный итератор
-    if(infoList->empty()) {
-        qDebug() << "Список медиа-файлов пуст. Воспроизведение невозможно";
+    if(isPlay) {
         return;
     }
+    isPlay = true;
+    currentFileIndex = -1; //Стандартный итератор
+    if(infoList->empty()) {
+        qDebug() << "Media set is empty";
+        return;
+    }
+    emit nextFileSignal();
 }
 
 void Media::playNext() {
+    if(!isPlay) {
+        return;
+    }
     currentFileIndex++;
     if(currentFileIndex >= infoList->size()) {
         currentFileIndex = 0;
@@ -55,7 +67,7 @@ void Media::playNext() {
     } else if(isVideo(file)) {
         setVideoWidget(file);
     } else {
-        qDebug() << "Неизвестный формат файла";
+        qDebug() << "Unknown file format: " + file.fileName();
     }
 
 }
@@ -72,13 +84,13 @@ void Media::setVideoWidget(QFile &file) {
 }
 
 void Media::setImageWidget(QFile &file) {
-    if(imageView->isHidden()) {
+    if(imageView->isHidden() && isPlay) {
         if(!videoSink->isHidden()) {
             videoSink->hide();
         }
         imageView->show();
     }
-    imageView->setPixmap(QPixmap(file.fileName()));
+    imageView->setPixmap(QPixmap(file.fileName()).scaled(imageView->size(), Qt::KeepAspectRatio));
     imageView->setMask(imageView->pixmap().mask());
     imageView->update();
     imageTimer->start();
@@ -86,18 +98,21 @@ void Media::setImageWidget(QFile &file) {
 
 void Media::changeIntervalImage(int interval) {
     interval *= 1000;
-    if(interval > 1000) {
+    if(interval >= 1000) {
     intervalUpdateImage = interval;
     imageTimer->setInterval(intervalUpdateImage);
     } else {
-        qDebug() << "Невозможно установить значение интервала менее 1 секунды";
+        qDebug() << "Doesn't set interval time value less than one second";
     }
 }
 
 void Media::stopMedia() {
+    isPlay = false;
     imageTimer->stop();
     imageView->hide();
     videoSink->hide();
+    player->stop();
+E    emit signalIsStoped();
 }
 
 void Media::stopImage() {
@@ -105,9 +120,11 @@ void Media::stopImage() {
     emit nextFileSignal();
 }
 
-void Media::stopVideo() {
-    player->stop();
-    emit nextFileSignal();
+void Media::stopVideo(QMediaPlayer::PlaybackState rate) {
+    if(rate == QMediaPlayer::PausedState || rate == QMediaPlayer::StoppedState) {
+        player->stop();
+        emit nextFileSignal();
+    }
 }
 
 

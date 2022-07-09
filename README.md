@@ -28,3 +28,19 @@ You can test it with the .mp3 file in this repo.
 
 # Built With
 - [Qt](https://www.qt.io): Cross platform software development for embedded systems.
+
+# About install
+You need to create a settings.ini file along the path C:\monitor
+It is necessary to define 2 fields in the settings file: [MAIN], [POSITION].
+[MAIN] includes parameters
+PATH_HTML=C:/monitor/act.html
+FONT_NAME=Halvar Engschrift Light.ttf
+FONT_SIZE=60
+INTERVAL_READING=1
+PATH_MEDIA=D:/monitor/media
+IMAGE_INTERVAL=5
+[POSITION] includes parameters
+X=0
+Y=0
+dX=650
+dY=400

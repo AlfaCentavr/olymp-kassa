@@ -9,7 +9,6 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    //QFileInfoList *infoList = new QFileInfoList(QDir("D:/monitor/media").entryInfoList(QDir::Files, QDir::Size));
     QSettings settings("C:/monitor/settings.ini", QSettings::IniFormat);
     settings.beginGroup("MAIN");
     QString pathHttp = settings.value("PATH_HTML").toString();

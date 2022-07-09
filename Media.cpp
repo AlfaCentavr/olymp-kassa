@@ -112,8 +112,7 @@ void Media::stopMedia() {
     imageView->hide();
     videoSink->hide();
     player->stop();
-    qDebug() << "Media::stopMedia() ~~~~~ Media emit signalIsStoped";
-    emit signalIsStoped();
+E    emit signalIsStoped();
 }
 
 void Media::stopImage() {

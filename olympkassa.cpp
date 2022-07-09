@@ -49,7 +49,6 @@ void OlympKassa::hideHtml() {
     ui->olympLogo->hide();
     ui->widget->hide();
     ui->centralwidget->setStyleSheet(mediaStyle);
-    qDebug() << "OlympKassa::hideHtml() ~~~~~ OlympKassa emit playMediaSignal";
     emit playMediaSignal();
 }
 

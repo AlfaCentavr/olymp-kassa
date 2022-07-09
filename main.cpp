@@ -35,5 +35,6 @@ int main(int argc, char *argv[])
     media.changeIntervalImage(lifeIntervalImage);
     QObject::connect(&w, &OlympKassa::playMediaSignal, &media, &Media::playMedia);
     QObject::connect(&w, &OlympKassa::stopMediaSignal, &media, &Media::stopMedia);
+    QObject::connect(&media, &Media::signalIsStoped, &w, &OlympKassa::showHtml);
     return a.exec();
 }

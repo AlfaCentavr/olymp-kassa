@@ -37,6 +37,7 @@ private:
     void setVideoWidget(QFile &file);
 signals:
     void nextFileSignal();
+    void signalIsStoped();
 };
 
 #endif // MEDIA_H

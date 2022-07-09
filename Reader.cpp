@@ -45,7 +45,6 @@ void Reader::checkFile(){
             this->hash = 0;
         }
     } else { //Файл не существует, именно тут необходимо включать проигрывание изображений и 
-        qDebug() << "Start media. File deleted";
         this->hash = 0;
         emit startMedia();
     }

@@ -54,6 +54,9 @@ void Media::playMedia() {
 }
 
 void Media::playNext() {
+    if(!isPlay) {
+        return;
+    }
     currentFileIndex++;
     if(currentFileIndex >= infoList->size()) {
         currentFileIndex = 0;
@@ -81,7 +84,7 @@ void Media::setVideoWidget(QFile &file) {
 }
 
 void Media::setImageWidget(QFile &file) {
-    if(imageView->isHidden()) {
+    if(imageView->isHidden() && isPlay) {
         if(!videoSink->isHidden()) {
             videoSink->hide();
         }
@@ -104,10 +107,13 @@ void Media::changeIntervalImage(int interval) {
 }
 
 void Media::stopMedia() {
+    isPlay = false;
     imageTimer->stop();
     imageView->hide();
     videoSink->hide();
-    isPlay = false;
+    player->stop();
+    qDebug() << "Media::stopMedia() ~~~~~ Media emit signalIsStoped";
+    emit signalIsStoped();
 }
 
 void Media::stopImage() {
